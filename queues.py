@@ -27,33 +27,17 @@ class Stack(Queue): # <-- Inheritance
     def dequeue(self):
         return self._elements.pop() # pop() gets and removes the last element on the data.
 
-# ***********************INTRODUCTION FOR PRIORITY QUEUE********************************
-# # Representing Priority Queues With a Heap
-# fruits = []
-
-# heappush(fruits, "orange")
-# heappush(fruits, "apple")
-# heappush(fruits, "banana")
-# print(fruits)
-
-# # heappop gets the first element and the remaining element shuffles a little
-# heappop(fruits)
-# print(fruits)
-
-# person1 = ("John", "Brown", 42)
-# person2 = ("John", "Doe", 42)
-# person3 = ("John", "Doe", 24)
-
-# print(person1 < person2)
-# print(person2 < person3)
-
 # Building a Priority Queue Data Type
 class PriorityQueue:
     def __init__(self):
         self._elements = []
 
     def enqueue_with_priority(self, priority, value):
-        heappush(self._elements, (priority, value))
+        heappush(self._elements, (-priority, value)) # since the priority declaration is based on integer value,
+                                                    # if we put a negative(-) sign to the priority variable, we 
+                                                    # can alter the priority values making the highest value becomes
+                                                    # the lowest and be the first one to be dequeued.
 
     def dequeue(self):
-        return heappop(self._elements)[1]
+        return heappop(self._elements)[1] # the index will access the second element in the tuple
+                                            # making it displayed as string.
