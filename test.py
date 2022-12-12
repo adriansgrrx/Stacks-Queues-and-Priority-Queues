@@ -1,4 +1,5 @@
 from queues import Queue
+from queues import Stack
 
 # fifo = Queue()
 # fifo.enqueue("1st")
@@ -9,11 +10,14 @@ from queues import Queue
 # print(fifo.dequeue())
 # print(fifo.dequeue())
 
-fifo = Queue("1st", "2nd", "3rd")
-print(len(fifo))
+# fifo = Queue("1st", "2nd", "3rd")
+# print(len(fifo))
 
-for element in fifo:
+# for element in fifo:
+#     print(element)
+
+# print(len(fifo))
+
+lifo = Stack("1st", "2nd", "3rd")
+for element in lifo:
     print(element)
-
-# this will return a vlaue of 0 after the iteration because of the built-in function __iter__
-print(len(fifo))
