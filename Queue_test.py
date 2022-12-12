@@ -9,11 +9,13 @@ from queues import Queue
 # print(fifo.dequeue())
 # print(fifo.dequeue())
 
-fifo = Queue("1st", "2nd", "3rd")
-print(len(fifo))
+fifo = Queue("Kylee Arroyo", "Randall Forbes", "Matthew Frazier", "Nyasia Hubbard", "Damaris Hooper")
+print(f"\nElement size before: {len(fifo)}\n")
 
+item = 1
 for element in fifo:
-    print(element)
+    print(f"{item}) {element}")
+    item += 1
 
 # this will return a value of 0 after the iteration because of the built-in function __iter__
-print(len(fifo))
+print(f"\nElement size after: {len(fifo)}\n")
