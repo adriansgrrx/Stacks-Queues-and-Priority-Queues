@@ -1,6 +1,5 @@
 from collections import deque
-from heapq import heappush
-from heapq import heappop
+from heapq import heappush, heappop
 
 # Building Queue(FIFO) data type
 class Queue:
@@ -26,9 +25,10 @@ class Queue:
 # Building Stack(LIFO) data type
 class Stack(Queue): # <-- Inheritance
     def dequeue(self):
-        return self._elements.pop() # pop()  gets and removes the last element on the data.
+        return self._elements.pop() # pop() gets and removes the last element on the data.
 
-# Representing Priority Queues With a Heap
+# ***********************INTRODUCTION FOR PRIORITY QUEUE********************************
+# # Representing Priority Queues With a Heap
 # fruits = []
 
 # heappush(fruits, "orange")
@@ -40,9 +40,20 @@ class Stack(Queue): # <-- Inheritance
 # heappop(fruits)
 # print(fruits)
 
-person1 = ("John", "Brown", 42)
-person2 = ("John", "Doe", 42)
-person3 = ("John", "Doe", 24)
+# person1 = ("John", "Brown", 42)
+# person2 = ("John", "Doe", 42)
+# person3 = ("John", "Doe", 24)
 
-print(person1 < person2)
-print(person2 < person3)
+# print(person1 < person2)
+# print(person2 < person3)
+
+# Building a Priority Queue Data Type
+class PriorityQueue:
+    def __init__(self):
+        self._elements = []
+
+    def enqueue_with_priority(self, priority, value):
+        heappush(self._elements, (priority, value))
+
+    def dequeue(self):
+        return heappop(self._elements)[1]
