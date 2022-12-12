@@ -1,5 +1,5 @@
 from queues import PriorityQueue
-# ***********************INTRODUCTION FOR PRIORITY QUEUE********************************
+# ***********************INTRODUCTION FOR PRIORITY QUEUE*******************************
 # # Representing Priority Queues With a Heap
 # fruits = []
 
