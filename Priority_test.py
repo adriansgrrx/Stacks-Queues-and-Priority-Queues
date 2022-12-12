@@ -30,6 +30,6 @@ messages.enqueue_with_priority(CRITICAL, "Brake pedal depressed")
 messages.enqueue_with_priority(IMPORTANT, "Hazard lights turned on")
 
 print(messages.dequeue()) #Critical
-print(messages.dequeue()) #Important
-print(messages.dequeue()) #Important
+print(messages.dequeue()) #Important, Windshield wipers turned on
+print(messages.dequeue()) #Important, Hazard lights turned on
 print(messages.dequeue()) #Neutral
