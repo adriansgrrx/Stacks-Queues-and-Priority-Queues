@@ -22,7 +22,7 @@ class Queue:
         return self._elements.popleft()
 
 # Building Stack(LIFO) data type
-class Stack(Queue):
+class Stack(Queue): # <-- Inheritance
     def dequeue(self):
         return self._elements.pop() # pop()  gets and removes the last element on the data.
 
@@ -49,7 +49,19 @@ class Stack(Queue):
 # print(len(fifo))
 
 # LIFO
-lifo = Stack("1st", "2nd", "3rd")
-for element in lifo:
-    print(element) # This will return the descending order of the data, 
+# lifo = Stack("1st", "2nd", "3rd")
+# for element in lifo:
+#     print(element) # This will return the descending order of the data, 
                     # wherein the Last entered element will pulled out until the first element.
+
+# LIFO Data Type Alternative using list
+lifo = []
+
+lifo.append("1st")
+lifo.append("2nd")
+lifo.append("3rd")
+
+# This will return the same result
+print(lifo.pop())
+print(lifo.pop())
+print(lifo.pop())
