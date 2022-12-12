@@ -1,5 +1,6 @@
 from collections import deque
 
+# Building Queue(FIFO) data type
 class Queue:
     # adding "*" to a parameter to have a varying number of positional argument and not just one
     def __init__(self, *elements): 
@@ -20,6 +21,15 @@ class Queue:
     def dequeue(self):
         return self._elements.popleft()
 
+# Building Stack(LIFO) data type
+class Stack(Queue):
+    def dequeue(self):
+        return self._elements.pop() # pop()  gets and removes the last element on the data.
+
+# ******************
+# Testing Section
+# ******************
+# FIFO
 # fifo = Queue()
 # fifo.enqueue("1st")
 # fifo.enqueue("2nd")
@@ -29,11 +39,17 @@ class Queue:
 # print(fifo.dequeue())
 # print(fifo.dequeue())
 
-fifo = Queue("1st", "2nd", "3rd")
-print(len(fifo))
+# fifo = Queue("1st", "2nd", "3rd")
+# print(len(fifo))
 
-for element in fifo:
-    print(element)
+# for element in fifo:
+#     print(element)
 
-# this will return a vlaue of 0 after the iteration because of the built-in function __iter__
-print(len(fifo))
+# # this will return a vlaue of 0 after the iteration because of the built-in function __iter__
+# print(len(fifo))
+
+# LIFO
+lifo = Stack("1st", "2nd", "3rd")
+for element in lifo:
+    print(element) # This will return the descending order of the data, 
+                    # wherein the Last entered element will pulled out until the first element.
