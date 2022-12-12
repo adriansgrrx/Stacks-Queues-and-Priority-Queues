@@ -24,12 +24,15 @@ IMPORTANT = 2
 NEUTRAL = 1
 
 messages = PriorityQueue()
-messages.enqueue_with_priority(IMPORTANT, "Windshield wipers turned on")
-messages.enqueue_with_priority(NEUTRAL, "Radio station tuned in")
-messages.enqueue_with_priority(CRITICAL, "Brake pedal depressed")
-messages.enqueue_with_priority(IMPORTANT, "Hazard lights turned on")
+messages.enqueue_with_priority(IMPORTANT, "Eat breakfast")
+messages.enqueue_with_priority(NEUTRAL, "Wear perfume")
+messages.enqueue_with_priority(NEUTRAL, "Put a jacket on")
+messages.enqueue_with_priority(CRITICAL, "Wake up early")
+messages.enqueue_with_priority(IMPORTANT, "Take a shower")
 
 print(messages.dequeue()) #Critical
-print(messages.dequeue()) #Important, Windshield wipers turned on
-print(messages.dequeue()) #Important, Hazard lights turned on
-print(messages.dequeue()) #Neutral
+print(messages.dequeue()) #Important, Eat breakfast
+print(messages.dequeue()) #Important, Take a shower
+print(messages.dequeue()) #Neutral, Wear perfume
+print(messages.dequeue()) #Neutral, Put a jacket on
+
