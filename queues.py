@@ -29,13 +29,20 @@ class Stack(Queue): # <-- Inheritance
         return self._elements.pop() # pop()  gets and removes the last element on the data.
 
 # Representing Priority Queues With a Heap
-fruits = []
+# fruits = []
 
-heappush(fruits, "orange")
-heappush(fruits, "apple")
-heappush(fruits, "banana")
-print(fruits)
+# heappush(fruits, "orange")
+# heappush(fruits, "apple")
+# heappush(fruits, "banana")
+# print(fruits)
 
-# heappop gets the first element and the remaining element shuffles a little
-heappop(fruits)
-print(fruits)
+# # heappop gets the first element and the remaining element shuffles a little
+# heappop(fruits)
+# print(fruits)
+
+person1 = ("John", "Brown", 42)
+person2 = ("John", "Doe", 42)
+person3 = ("John", "Doe", 24)
+
+print(person1 < person2)
+print(person2 < person3)
