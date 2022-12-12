@@ -17,15 +17,6 @@ class Queue(IterableMixin):
     def __init__(self, *elements): 
         self._elements = deque(elements)
 
-    # using a built-in function __len__ to make function len() operational
-    def __len__(self):
-        return len(self._elements)
-
-    # using a built-in function __iter__ to make the class iterable
-    def __iter__(self):
-        while len(self) > 0:
-            yield self.dequeue() #yield is the same as return but it just pauses the execution of the function
-
     def enqueue(self, element):
         self._elements.append(element)
 
