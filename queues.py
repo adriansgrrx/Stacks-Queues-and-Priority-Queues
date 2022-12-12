@@ -1,5 +1,6 @@
 from collections import deque
 from heapq import heappush, heappop
+from itertools import count
 
 # Building Queue(FIFO) data type
 class Queue:
@@ -31,13 +32,14 @@ class Stack(Queue): # <-- Inheritance
 class PriorityQueue:
     def __init__(self):
         self._elements = []
+        self._counter = count()
 
     def enqueue_with_priority(self, priority, value):
-        heappush(self._elements, (-priority, value)) # since the priority declaration is based on integer value,
-                                                    # if we put a negative(-) sign to the priority variable, we 
-                                                    # can alter the priority values making the highest value becomes
-                                                    # the lowest and be the first one to be dequeued.
-
+        element = (-priority, next(self._counter), value) # the _counter will be responsible for handling 
+                                                            # the same priority description making the 
+                                                            # first enqueued be the first by default.  
+        heappush(self._elements, element) # rearranging heappush parameters
     def dequeue(self):
-        return heappop(self._elements)[1] # the index will access the second element in the tuple
-                                            # making it displayed as string.
+        return heappop(self._elements)[-1] # to indicate the last component of the tuple, 
+                                            #regardless of its length, -1 was implemented as the index 
+                                            # of the tuple
