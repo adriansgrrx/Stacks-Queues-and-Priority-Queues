@@ -1,18 +1,21 @@
 from queues import Stack
 
-lifo = Stack("1st", "2nd", "3rd")
-for element in lifo:
-    print(element) # This will return the descending order of the data, 
-                    # wherein the Last entered element will pulled out until the first element.
-
 # LIFO Data Type Alternative using list
-lifo = []
+# lifo = []
 
-lifo.append("1st")
-lifo.append("2nd")
-lifo.append("3rd")
+# lifo.append("1st")
+# lifo.append("2nd")
+# lifo.append("3rd")
 
-# This will return the same result
-print(lifo.pop())
-print(lifo.pop())
-print(lifo.pop())
+# # This will return the same result
+# print(lifo.pop())
+# print(lifo.pop())
+# print(lifo.pop())
+
+lifo = Stack("Kylee Arroyo", "Randall Forbes", "Matthew Frazier", "Nyasia Hubbard", "Damaris Hooper")
+
+item = 1
+for element in lifo:                # This will return the descending order of the data, 
+    print(f"{item}) {element}")    # wherein the Last entered element will pulled out until the first element.
+    item += 1               
+    
