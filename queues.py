@@ -1,4 +1,6 @@
 from collections import deque
+from heapq import heappush
+from heapq import heappop
 
 # Building Queue(FIFO) data type
 class Queue:
@@ -25,6 +27,21 @@ class Queue:
 class Stack(Queue): # <-- Inheritance
     def dequeue(self):
         return self._elements.pop() # pop()  gets and removes the last element on the data.
+
+# Representing Priority Queues With a Heap
+fruits = []
+
+heappush(fruits, "orange")
+heappush(fruits, "apple")
+heappush(fruits, "banana")
+print(fruits)
+
+# heappop gets the first element and the remaining element shuffles a little
+heappop(fruits)
+print(fruits)
+
+
+
 
 # ******************
 # Testing Section
@@ -55,13 +72,13 @@ class Stack(Queue): # <-- Inheritance
                     # wherein the Last entered element will pulled out until the first element.
 
 # LIFO Data Type Alternative using list
-lifo = []
+# lifo = []
 
-lifo.append("1st")
-lifo.append("2nd")
-lifo.append("3rd")
+# lifo.append("1st")
+# lifo.append("2nd")
+# lifo.append("3rd")
 
-# This will return the same result
-print(lifo.pop())
-print(lifo.pop())
-print(lifo.pop())
+# # This will return the same result
+# print(lifo.pop())
+# print(lifo.pop())
+# print(lifo.pop())
