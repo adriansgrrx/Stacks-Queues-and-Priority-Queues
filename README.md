@@ -1,7 +1,7 @@
 # Stacks-Queues-and-Priority-Queues
 a DSA activity
 
-Src: https://realpython.com/queue-in-python/
+Src: https://realpython.com/queue-in-python/ <br>
 NOTE: "realpython_math" contains all the source code. The main reason of this extraction is to get "roadmap.dot" for data examination. All this are for educational purposes only.  <br>
 In this repository you will find several python files. Files with "_test.py" on its filename indicates class testers. <br>
 <br>
