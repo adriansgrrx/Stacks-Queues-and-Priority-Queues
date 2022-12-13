@@ -20,6 +20,8 @@ class City(NamedTuple): # NamedTuples contain keys that are hashed to a particul
             longitude = float(attrs["longitude"]),
         ) # returns a new instance of the City class
 
+
+# Breadth-First Search Using a FIFO Queue
 def load_graph(filename, node_factory):
     graph = nx.nx_agraph.read_dot(filename)
     nodes = {
@@ -31,17 +33,20 @@ def load_graph(filename, node_factory):
         for name1, name2, weights in graph.edges(data=True)
     )
 
-def breadth_first_traverse(graph, source):
+def breadth_first_traverse(graph, source, order_by=None):
     queue = Queue(source)
     visited = {source}
     while queue:
         yield (node := queue.dequeue())
-        for neighbor in graph.neighbors(node):
+        neighbors = list(graph.neighbors(node))
+        if order_by:
+            neighbors.sort(key=order_by)
+        for neighbor in neighbors:
             if neighbor not in visited:
                 visited.add(neighbor)
                 queue.enqueue(neighbor)
 
-def breadth_first_search(graph, source, predicate):
-    for node in breadth_first_traverse(graph, source):
+def breadth_first_search(graph, source, predicate, order_by=None):
+    for node in breadth_first_traverse(graph, source, order_by):
         if predicate(node):
             return node
