@@ -101,3 +101,31 @@ def depth_first_traverse(graph, source, order_by=None):
                 neighbors.sort(key=order_by)
             for neighbor in reversed(neighbors):
                 stack.enqueue(neighbor)
+
+# rewriting the function recursively for backtracking purposes
+def recursive_depth_first_traverse(graph, source, order_by=None):
+    visited = set()
+
+    def visit(node):
+        yield node
+        visited.add(node)
+        neighbors = list(graph.neighbors(node))
+        if order_by:
+            neighbors.sort(key=order_by)
+        for neighbor in neighbors:
+            if neighbor not in visited:
+                yield from visit(neighbor)
+
+    return visit(source)
+# breadth_first_search() and depth_first_search() functions call search() with the corresponding traversal strategy.
+def search(traverse, graph, source, predicate, order_by=None):
+    for node in traverse(graph, source, order_by):
+        if predicate(node):
+            return node
+            
+def breadth_first_search(graph, source, predicate, order_by=None):
+    return search(breadth_first_traverse, graph, source, predicate, order_by)
+
+def depth_first_search(graph, source, predicate, order_by=None):
+    return search(depth_first_traverse, graph, source, predicate, order_by)
+
