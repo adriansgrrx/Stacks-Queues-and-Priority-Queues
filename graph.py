@@ -69,7 +69,8 @@ def shortest_path(graph, source, destination, order_by=None):
                 previous[neighbor] = node
                 if neighbor == destination:
                     return retrace(previous, source, destination)
-
+                    
+# To recreate the shortest path between the source and destination
 def retrace(previous, source, destination):
     path = deque()
     current = destination
@@ -81,3 +82,7 @@ def retrace(previous, source, destination):
 
     path.appendleft(source)
     return list(path)
+
+# breadth-first traversal tells whether two nodes remain connected or not.
+def connected(graph, source, destination):
+    return shortest_path(graph, source, destination) is not None
