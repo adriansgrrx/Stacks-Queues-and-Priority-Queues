@@ -11,6 +11,8 @@ from rich.columns import Columns
 from rich.console import Group
 from rich.live import Live
 from rich.panel import Panel
+from dataclasses import dataclass, field
+from enum import IntEnum
 
 QUEUE_TYPES = {
     "fifo": Queue,
@@ -36,6 +38,26 @@ PRODUCTS = (
     ":thread:",
     ":yo-yo:",
 )
+
+@dataclass(order=True)
+class Product:
+    priority: int
+    label: str = field(compare=False)
+
+    def __str__(self):
+        return self.label
+
+class Priority(IntEnum):
+    HIGH = 1
+    MEDIUM = 2
+    LOW = 3
+
+PRIORITIZED_PRODUCTS = (
+    Product(Priority.HIGH, ":1st_place_medal:"),
+    Product(Priority.MEDIUM, ":2nd_place_medal:"),
+    Product(Priority.LOW, ":3rd_place_medal:"),
+)
+
 # The worker class extends the threading.Thread class and configures itself as a daemon thread so that its instances won’t prevent your program from exiting when the main thread finishes
 class Worker(threading.Thread):
     def __init__(self, speed, buffer):
@@ -87,6 +109,7 @@ class Consumer(Worker): # <-- Worker inherited
             self.simulate_work()
             self.buffer.task_done()
             self.simulate_idle()
+
 class View:
     def __init__(self, buffer, producers, consumers):
         self.buffer = buffer
@@ -101,7 +124,6 @@ class View:
                 live.update(self.render())
 
     def render(self):
-
         match self.buffer:
             case PriorityQueue():
                 title = "Priority Queue"
@@ -134,12 +156,11 @@ class View:
         )
         return Panel(align, height=5, title=title)
 
-# queue.Queue will animate FIFO animation
-# to make the program LIFO, enter [python thread_safe_queues.py --queue lifo] to the terminal.
 def main(args):
     buffer = QUEUE_TYPES[args.queue]()
+    products = PRIORITIZED_PRODUCTS if args.queue == "heap" else PRODUCTS
     producers = [
-        Producer(args.producer_speed, buffer, PRODUCTS)
+        Producer(args.producer_speed, buffer, products)
         for _ in range(args.producers)
     ]
     consumers = [
