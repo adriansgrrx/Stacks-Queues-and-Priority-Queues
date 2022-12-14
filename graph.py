@@ -1,7 +1,7 @@
 from typing import NamedTuple
 import networkx as nx
-from queues import Queue
 from collections import deque
+from queues import Queue, Stack
 
 class City(NamedTuple): # NamedTuples contain keys that are hashed to a particular value. 
     name: str           # it supports both access from key-value and iteration.
@@ -69,7 +69,7 @@ def shortest_path(graph, source, destination, order_by=None):
                 previous[neighbor] = node
                 if neighbor == destination:
                     return retrace(previous, source, destination)
-                    
+
 # To recreate the shortest path between the source and destination
 def retrace(previous, source, destination):
     path = deque()
@@ -86,3 +86,18 @@ def retrace(previous, source, destination):
 # breadth-first traversal tells whether two nodes remain connected or not.
 def connected(graph, source, destination):
     return shortest_path(graph, source, destination) is not None
+
+# Depth-First Search Using a LIFO Queue
+# In the classic depth-first traversal, in addition to replacing the queue with a stack, we initially won’t mark the source node as visited
+def depth_first_traverse(graph, source, order_by=None):
+    stack = Stack(source)
+    visited = set()
+    while stack:
+        if (node := stack.dequeue()) not in visited:
+            yield node
+            visited.add(node)
+            neighbors = list(graph.neighbors(node))
+            if order_by:
+                neighbors.sort(key=order_by)
+            for neighbor in reversed(neighbors):
+                stack.enqueue(neighbor)
