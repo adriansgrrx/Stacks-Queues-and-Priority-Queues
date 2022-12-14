@@ -12,5 +12,9 @@ To give summary:<br>
     -> Priority_test.py<br>
 
 "graph.py" has the following testers:<br>
+"cities_n_roads_rep.py" is a NetworkX and Graphviz tester. <br>
     -> graph_test.py --> general tester<br>
     -> BFSxFIFO_test.py --> Breadth-First Search Using a FIFO Queue<br>
+    -> SPxBFT_test.py --> Shortest Path Using Breadth-First Traversal<br>
+    -> DFSxLIFO_test.py --> Depth-First Search Using a LIFO Queue<br>
+    -> Dijkstra’sAlgxPriority_test.py --> Dijkstra’s Algorithm Using a Priority Queue<br>
