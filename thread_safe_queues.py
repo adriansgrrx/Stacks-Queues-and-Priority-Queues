@@ -2,6 +2,7 @@
 # multi-producer, multi-consumer problem using Python’s thread-safe queues.
 import argparse
 from queue import LifoQueue, PriorityQueue, Queue
+import threading
 
 QUEUE_TYPES = {
     "fifo": Queue,
@@ -27,6 +28,7 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         pass
 
+# textual codes that Rich will eventually replace with the corresponding emoji glyphs.
 PRODUCTS = (
     ":balloon:",
     ":cookie:",
@@ -44,3 +46,12 @@ PRODUCTS = (
     ":thread:",
     ":yo-yo:",
 )
+# The worker class extends the threading.Thread class and configures itself as a daemon thread so that its instances won’t prevent your program from exiting when the main thread finishes
+class Worker(threading.Thread):
+    def __init__(self, speed, buffer):
+        super().__init__(daemon=True)
+        self.speed = speed
+        self.buffer = buffer
+        self.product = None
+        self.working = False
+        self.progress = 0
