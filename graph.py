@@ -1,6 +1,7 @@
 from typing import NamedTuple
 import networkx as nx
 from queues import Queue
+from collections import deque
 
 class City(NamedTuple): # NamedTuples contain keys that are hashed to a particular value. 
     name: str           # it supports both access from key-value and iteration.
@@ -50,3 +51,33 @@ def breadth_first_search(graph, source, predicate, order_by=None):
     for node in breadth_first_traverse(graph, source, order_by):
         if predicate(node):
             return node
+            
+# Shortest Path Using Breadth-First Traversal
+def shortest_path(graph, source, destination, order_by=None):
+    queue = Queue(source)
+    visited = {source}
+    previous = {}
+    while queue:
+        node = queue.dequeue()
+        neighbors = list(graph.neighbors(node))
+        if order_by:
+            neighbors.sort(key=order_by)
+        for neighbor in neighbors:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.enqueue(neighbor)
+                previous[neighbor] = node
+                if neighbor == destination:
+                    return retrace(previous, source, destination)
+
+def retrace(previous, source, destination):
+    path = deque()
+    current = destination
+    while current != source:
+        path.appendleft(current)
+        current = previous.get(current)
+        if current is None:
+            return None
+
+    path.appendleft(source)
+    return list(path)
