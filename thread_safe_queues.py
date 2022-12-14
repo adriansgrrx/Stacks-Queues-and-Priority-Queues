@@ -156,6 +156,7 @@ class View:
         )
         return Panel(align, height=5, title=title)
 
+# can be accessed in the terminal using [python thread_safe_queues.py  ---producers 1  --consumers 2  --producer-speed 1  --consumer-speed 1  --queue fifo/lifo/heap] or simply [python thread_safe_queues.py  --queue fifo/lifo/heap]
 def main(args):
     buffer = QUEUE_TYPES[args.queue]()
     products = PRIORITIZED_PRODUCTS if args.queue == "heap" else PRODUCTS
