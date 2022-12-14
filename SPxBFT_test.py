@@ -2,6 +2,7 @@
 import networkx as nx
 from graph import City, load_graph
 from graph import shortest_path
+from graph import connected
 
 nodes, graph = load_graph("realpython_mat/roadmap.dot", City.from_dict)
 
@@ -19,10 +20,13 @@ print("Queue-based implementation:")
 print(" → ".join(city.name for city in shortest_path(graph, city1, city2)))
 
 def by_latitude(city):
-    return -city.latitude
+    return -city.latitude #To enforce a descending order, we add the minus sign (-) in front of the .latitude attribute.
 
 print(" → ".join(
     city.name
     for city in shortest_path(graph, city1, city2, by_latitude)
 ))
-print()
+
+print("***************************** CONNECTED or NOT ************************************")
+print(connected(graph, nodes["belfast"], nodes["glasgow"]))
+print(connected(graph, nodes["belfast"], nodes["derry"]))
