@@ -1,7 +1,8 @@
 from typing import NamedTuple
 import networkx as nx
 from collections import deque
-from queues import Queue, Stack
+from math import inf as infinity
+from queues import MutableMinHeap, Queue, Stack
 
 class City(NamedTuple): # NamedTuples contain keys that are hashed to a particular value. 
     name: str           # it supports both access from key-value and iteration.
@@ -122,10 +123,30 @@ def search(traverse, graph, source, predicate, order_by=None):
     for node in traverse(graph, source, order_by):
         if predicate(node):
             return node
-            
+
 def breadth_first_search(graph, source, predicate, order_by=None):
     return search(breadth_first_traverse, graph, source, predicate, order_by)
 
 def depth_first_search(graph, source, predicate, order_by=None):
     return search(depth_first_traverse, graph, source, predicate, order_by)
 
+# Dijkstra’s Algorithm Using a Priority Queue
+def dijkstra_shortest_path(graph, source, destination, weight_factory):
+    previous = {}
+    visited = set()
+
+    unvisited = MutableMinHeap()
+    for node in graph.nodes:
+        unvisited[node] = infinity
+    unvisited[source] = 0
+
+    while unvisited:
+        visited.add(node := unvisited.dequeue())
+        for neighbor, weights in graph[node].items():
+            if neighbor not in visited:
+                weight = weight_factory(weights)
+                new_distance = unvisited[node] + weight
+                if new_distance < unvisited[neighbor]:
+                    unvisited[neighbor] = new_distance
+                    previous[neighbor] = node
+    return retrace(previous, source, destination)
