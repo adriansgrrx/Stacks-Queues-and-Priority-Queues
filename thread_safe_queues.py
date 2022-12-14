@@ -134,6 +134,8 @@ class View:
         )
         return Panel(align, height=5, title=title)
 
+# queue.Queue will animate FIFO animation
+# to make the program LIFO, enter [python thread_safe_queues.py --queue lifo] to the terminal.
 def main(args):
     buffer = QUEUE_TYPES[args.queue]()
     producers = [
