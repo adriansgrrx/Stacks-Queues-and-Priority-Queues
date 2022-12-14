@@ -3,6 +3,8 @@
 import argparse
 from queue import LifoQueue, PriorityQueue, Queue
 import threading
+from random import randint
+from time import sleep
 
 QUEUE_TYPES = {
     "fifo": Queue,
@@ -55,3 +57,25 @@ class Worker(threading.Thread):
         self.product = None
         self.working = False
         self.progress = 0
+
+    @property # @property decorator is a built-in decorator in Python which is helpful in defining the          
+                # properties effortlessly without manually calling the inbuilt function property().
+    # handles if the worker is working or on idle
+    def state(self):
+        if self.working:
+            return f"{self.product} ({self.progress}%)"
+        return ":zzz: Idle"
+    # idle handler
+    def simulate_idle(self):
+        self.product = None
+        self.working = False
+        self.progress = 0
+        sleep(randint(1, 3))
+    # working handler
+    def simulate_work(self):
+        self.working = True
+        self.progress = 0
+        delay = randint(1, 1 + 15 // self.speed)
+        for _ in range(100):
+            sleep(delay / 100)
+            self.progress += 1
