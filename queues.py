@@ -47,31 +47,31 @@ class PriorityQueue(IterableMixin):
                                             #regardless of its length, -1 was implemented as the index 
                                             # of the tuple
     
-    # Mutable version of a min-heap 
-    @dataclass(order=True) # order flag, which makes the elements comparable(just like tuples)
-    class Element:
-        priority: float
-        count: int
-        value: Any
+# Mutable version of a min-heap 
+@dataclass(order=True) # order flag, which makes the elements comparable(just like tuples)
+class Element:
+    priority: float
+    count: int
+    value: Any
 
-    class MutableMinHeap(IterableMixin):
-        def __init__(self):
-            super().__init__()
-            self._elements_by_value = {}
-            self._elements = []
-            self._counter = count()
+class MutableMinHeap(IterableMixin):
+    def __init__(self):
+        super().__init__()
+        self._elements_by_value = {}
+        self._elements = []
+        self._counter = count()
 
-        def __setitem__(self, unique_value, priority):
-            if unique_value in self._elements_by_value:
-                self._elements_by_value[unique_value].priority = priority
-                heapify(self._elements)
-            else:
-                element = Element(priority, next(self._counter), unique_value)
-                self._elements_by_value[unique_value] = element
-                heappush(self._elements, element)
+    def __setitem__(self, unique_value, priority):
+        if unique_value in self._elements_by_value:
+            self._elements_by_value[unique_value].priority = priority
+            heapify(self._elements)
+        else:
+            element = Element(priority, next(self._counter), unique_value)
+            self._elements_by_value[unique_value] = element
+            heappush(self._elements, element)
 
-        def __getitem__(self, unique_value):
-            return self._elements_by_value[unique_value].priority
+    def __getitem__(self, unique_value):
+        return self._elements_by_value[unique_value].priority
 
-        def dequeue(self):
-            return heappop(self._elements).value
+    def dequeue(self):
+        return heappop(self._elements).value
