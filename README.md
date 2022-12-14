@@ -19,6 +19,5 @@ To give summary:<br>
     -> Dijkstra’sAlgxPriority_test.py --> Dijkstra’s Algorithm Using a Priority Queue<br>
 
 **Using Thread-Safe Queues**<br>
-    -> thread_safe_queues.py --> where FIFO and LIFO Queues are run<br> 
-    **(NOTE: to run LIFO enter this at your terminal: python thread_safe_queues.py --queue lifo)**<br> 
-    -> thread_safe_queues_priority.py --> I isolated the Priority Queues to this file<br>
+    -> thread_safe_queues.py --> where FIFO, LIFO and Priority Queues can be tested.<br> 
+    **(NOTE: can be accessed in the terminal using [python thread_safe_queues.py  ---producers 1  --consumers 2  --producer-speed 1  --consumer-speed 1  --queue fifo/lifo/heap] or simply [python thread_safe_queues.py  --queue fifo/lifo/heap])**<br> 
