@@ -13,30 +13,40 @@ from typing import NamedTuple
 class Job(NamedTuple):
     url: str
     depth: int = 1
-
+    
+# Updated main function for Queue FIFO to execute
 async def main(args):
     session = aiohttp.ClientSession()
     try:
         links = Counter()
+        queue = asyncio.Queue() # instantiates an asynchronous FIFO queue.
+
+        # create a number of worker coroutines wrapped in asynchronous tasks that start running as soon as possible in the background on the event loop.
+        tasks = [
+            asyncio.create_task(
+                worker(
+                    f"Worker-{i + 1}",
+                    session,
+                    queue,
+                    links,
+                    args.max_depth,
+                )
+            )
+            for i in range(args.num_workers)
+        ]
+
+        await queue.put(Job(args.url)) # puts the first job in the queue, which kicks off the crawling.
+        await queue.join() # causes the main coroutine to wait until the queue has been drained and there are no more jobs to perform.
+
+        # do a graceful cleanup when the background tasks are no longer needed.
+        for task in tasks:
+            task.cancel()
+
+        await asyncio.gather(*tasks, return_exceptions=True)
+
         display(links)
     finally:
         await session.close()
-
-# The argparse module’s support for command-line interfaces is built around an instance of argparse.ArgumentParser. 
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("url")
-    parser.add_argument("-d", "--max-depth", type=int, default=2)
-    parser.add_argument("-w", "--num-workers", type=int, default=3)
-    return parser.parse_args()
-
-def display(links):
-    for url, count in links.most_common():
-        print(f"{count:>3} {url}")
-
-# asynchronous function or also known as coroutine changes the behavior of the function call.
-if __name__ == "__main__":
-    asyncio.run(main(parse_args()))
 
 # EXCLUSIVELY FOR HTML
 async def fetch_html(session, url):
@@ -67,3 +77,19 @@ async def worker(worker_id, session, queue, links, max_depth):
             print(f"[{worker_id} failed at {url=}]", file=sys.stderr)
         finally:
             queue.task_done()
+
+# The argparse module’s support for command-line interfaces is built around an instance of argparse.ArgumentParser. 
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("url")
+    parser.add_argument("-d", "--max-depth", type=int, default=2)
+    parser.add_argument("-w", "--num-workers", type=int, default=3)
+    return parser.parse_args()
+
+def display(links):
+    for url, count in links.most_common():
+        print(f"{count:>3} {url}")
+
+# asynchronous function or also known as coroutine changes the behavior of the function call.
+if __name__ == "__main__":
+    asyncio.run(main(parse_args()))
