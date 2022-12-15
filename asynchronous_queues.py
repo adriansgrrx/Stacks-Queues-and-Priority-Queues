@@ -23,8 +23,9 @@ async def main(args):
     session = aiohttp.ClientSession()
     try:
         links = Counter()
-        # queue = asyncio.Queue() # instantiates an asynchronous FIFO queue.
-        queue = asyncio.LifoQueue() # instantiates an asynchronous LIFO queue.
+        # queue = asyncio.Queue() # instantiates an asynchronous LIFO Queue.
+        # queue = asyncio.LifoQueue() # instantiates an asynchronous LIFO Queue.
+        queue = asyncio.PriorityQueue() # instantiates an asynchronous Priority Queue.
 
         # create a number of worker coroutines wrapped in asynchronous tasks that start running as soon as possible in the background on the event loop.
         tasks = [
