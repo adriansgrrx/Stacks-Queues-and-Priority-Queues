@@ -7,6 +7,26 @@ from hashlib import md5
 from itertools import product
 from string import ascii_lowercase
 
+# Formula encapsulation
+class Combinations:
+    def __init__(self, alphabet, length):
+        self.alphabet = alphabet
+        self.length = length
+
+    def __len__(self):
+        return len(self.alphabet) ** self.length
+    # This represents a collection of alphabet letter combinations with a given length. 
+    def __getitem__(self, index):
+        if index >= len(self):
+            raise IndexError
+        return "".join(
+            self.alphabet[
+                # A formula that determines the character at a given position in a combination specified by an index
+                (index // len(self.alphabet) ** i) % len(self.alphabet)
+            ]
+            for i in reversed(range(self.length))
+        )
+
 # will define a function that’ll try to reverse an MD5 hash value provided as the first argument. 
 def reverse_md5(hash_value, alphabet=ascii_lowercase, max_length=6):
     for length in range(1, max_length + 1):
