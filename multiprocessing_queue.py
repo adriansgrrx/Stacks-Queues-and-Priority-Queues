@@ -8,6 +8,7 @@ from itertools import product
 from string import ascii_lowercase
 import multiprocessing
 from dataclasses import dataclass
+import argparse
 
 # Formula encapsulation
 class Combinations:
@@ -78,10 +79,35 @@ def chunk_indices(length, num_chunks):
         num_chunks -= 1
 
 # call the function with a sample MD5 hash value passed as an argument and measure its execution time using a Python timer.
-def main():
-    t1 = time.perf_counter()
-    text = reverse_md5("a9d1cbf71942327e98b40cf5ef38a960") # sample hash value
-    print(f"{text} (found in {time.perf_counter() - t1:.1f}s)")
+# created both queues and populated the input queue with jobs before starting the worker processes
+def main(args):
+    queue_in = multiprocessing.Queue()
+    queue_out = multiprocessing.Queue()
+
+    workers = [
+        Worker(queue_in, queue_out, args.hash_value)
+        for _ in range(args.num_workers)
+    ]
+
+    for worker in workers:
+        worker.start()
+
+    for text_length in range(1, args.max_length + 1):
+        combinations = Combinations(ascii_lowercase, text_length)
+        for indices in chunk_indices(len(combinations), len(workers)):
+            queue_in.put(Job(combinations, *indices))
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("hash_value")
+    parser.add_argument("-m", "--max-length", type=int, default=6)
+    parser.add_argument(
+        "-w",
+        "--num-workers",
+        type=int,
+        default=multiprocessing.cpu_count(),
+    )
+    return parser.parse_args()
 
 if __name__ == "__main__":
-    main()
+    main(parse_args())
