@@ -7,6 +7,7 @@ from hashlib import md5
 from itertools import product
 from string import ascii_lowercase
 import multiprocessing
+from dataclasses import dataclass
 
 # Formula encapsulation
 class Combinations:
@@ -27,6 +28,19 @@ class Combinations:
             ]
             for i in reversed(range(self.length))
         )
+# A class that Python will serialize and place on the input queue for worker processes to consume
+@dataclass(frozen=True)
+class Job:
+    combinations: Combinations
+    start_index: int
+    stop_index: int
+
+    def __call__(self, hash_value):
+        for index in range(self.start_index, self.stop_index):
+            text_bytes = self.combinations[index].encode("utf-8")
+            hashed = md5(text_bytes).hexdigest()
+            if hashed == hash_value:
+                return text_bytes.decode("utf-8")
 
 # Communicating in Full-Duplex Mode
 # To define a worker process, Process class will be extended, which provides the familiar .run() method.
