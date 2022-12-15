@@ -13,7 +13,11 @@ from typing import NamedTuple
 class Job(NamedTuple):
     url: str
     depth: int = 1
-    
+    # adding the .__lt__() special method to the Job class, to which the less than (<) operator delegates when comparing two job instances:
+    def __lt__(self, other):
+        if isinstance(other, Job):
+            return len(self.url) < len(other.url)
+
 # Updated main function for Queue FIFO to execute
 async def main(args):
     session = aiohttp.ClientSession()
