@@ -1,13 +1,17 @@
 # To fetch data asynchronously, aiohttp library and beautifulsoup4. to parse HTML hyperlinks.
 
 # Asynchronous programming is a type of parallel programming in which a unit of work is allowed to run separately from the primary application thread. When the work is complete, it notifies the main thread about completion or failure of the worker thread.
-
 import argparse
 import asyncio
 from collections import Counter
 import aiohttp
 from urllib.parse import urljoin
 from bs4 import BeautifulSoup
+from typing import NamedTuple
+
+class Job(NamedTuple):
+    url: str
+    depth: int = 1
 
 async def main(args):
     session = aiohttp.ClientSession()
