@@ -30,7 +30,7 @@ class Combinations:
 # will define a function that’ll try to reverse an MD5 hash value provided as the first argument. 
 def reverse_md5(hash_value, alphabet=ascii_lowercase, max_length=6):
     for length in range(1, max_length + 1):
-        for combination in product(alphabet, repeat=length):
+        for combination in Combinations(alphabet, length):
             text_bytes = "".join(combination).encode("utf-8")
             hashed = md5(text_bytes).hexdigest()
             if hashed == hash_value:
