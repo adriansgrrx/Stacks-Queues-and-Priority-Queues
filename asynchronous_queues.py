@@ -50,3 +50,20 @@ def parse_links(url, html):
         href = anchor.get("href").lower()
         if not href.startswith("javascript:"):
             yield urljoin(url, href)
+
+# The worker sits in an infinite loop, waiting for a job to arrive in the queue. After consuming a single job, the worker can put one or more new jobs with a bumped-up depth in the queue to be consumed by itself or other workers.
+async def worker(worker_id, session, queue, links, max_depth):
+    print(f"[{worker_id} starting]", file=sys.stderr) # stderr -> Standard error – The user program writes error information to this file-handle.
+    while True:
+        url, depth = await queue.get()
+        links[url] += 1
+        try:
+            if depth <= max_depth:
+                print(f"[{worker_id} {depth=} {url=}]", file=sys.stderr)
+                if html := await fetch_html(session, url): # The walrus operator (:=) lets you await an HTTP response, check if the content was returned, and assign the result to the html variable in a single expression.
+                    for link_url in parse_links(url, html):
+                        await queue.put(Job(link_url, depth + 1))
+        except aiohttp.ClientError:
+            print(f"[{worker_id} failed at {url=}]", file=sys.stderr)
+        finally:
+            queue.task_done()
