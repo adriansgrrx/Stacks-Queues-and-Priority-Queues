@@ -15,7 +15,17 @@ def reverse_md5(hash_value, alphabet=ascii_lowercase, max_length=6):
             hashed = md5(text_bytes).hexdigest()
             if hashed == hash_value:
                 return text_bytes.decode("utf-8")
-                
+
+# Distributing Workload Evenly in Chunks
+def chunk_indices(length, num_chunks):
+    start = 0
+    while num_chunks > 0:
+        num_chunks = min(num_chunks, length)
+        chunk_size = round(length / num_chunks)
+        yield start, (start := start + chunk_size)
+        length -= chunk_size # rounding the subsequent chunk lengths, those with varying lengths end up nicely interleaved
+        num_chunks -= 1
+
 # call the function with a sample MD5 hash value passed as an argument and measure its execution time using a Python timer.
 def main():
     t1 = time.perf_counter()
