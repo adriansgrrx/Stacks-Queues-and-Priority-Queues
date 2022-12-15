@@ -2,9 +2,7 @@
 # Reversing an MD5 Hash on a Single Thread
 # MD5 (message-digest algorithm) is a cryptographic protocol used for authenticating messages as well as content verification and digital signatures. 
 
-import time
 from hashlib import md5
-from itertools import product
 from string import ascii_lowercase
 import multiprocessing
 from dataclasses import dataclass
