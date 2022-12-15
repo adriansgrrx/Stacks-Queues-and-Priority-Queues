@@ -6,6 +6,7 @@ import time
 from hashlib import md5
 from itertools import product
 from string import ascii_lowercase
+import multiprocessing
 
 # Formula encapsulation
 class Combinations:
@@ -26,6 +27,22 @@ class Combinations:
             ]
             for i in reversed(range(self.length))
         )
+
+# Communicating in Full-Duplex Mode
+# To define a worker process, Process class will be extended, which provides the familiar .run() method.
+class Worker(multiprocessing.Process):
+    def __init__(self, queue_in, queue_out, hash_value):
+        super().__init__(daemon=True)
+        self.queue_in = queue_in
+        self.queue_out = queue_out
+        self.hash_value = hash_value
+
+    def run(self):
+        while True:
+            job = self.queue_in.get()
+            if plaintext := job(self.hash_value):
+                self.queue_out.put(plaintext)
+                break
 
 # will define a function that’ll try to reverse an MD5 hash value provided as the first argument. 
 def reverse_md5(hash_value, alphabet=ascii_lowercase, max_length=6):
