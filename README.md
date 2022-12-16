@@ -35,3 +35,6 @@ To give summary:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**2.** *multiprocessing_queue_test.py*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**NOTE: multiprocessing_queue.py can be run using script together with the MD5 hash. Here's the cmd/script/s I used**<br> 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**1. python multiprocessing_queue.py a9d1cbf71942327e98b40cf5ef38a960**<br> 
+
+**Integrating Python With Distributed Message Queues**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Folder name** *Distributed Message Queues*<br>
