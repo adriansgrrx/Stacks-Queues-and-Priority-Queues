@@ -13,4 +13,4 @@ To give summary:<br>
 **NOTE: I encountered some discrepancies on this part whixh is the last part.**<br><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**1.** *producer_kafka.py*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**2.** *consumer_kafka.py*<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**3.** *docker-compose.yml*<br> --> configuration(essential)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**3.** *docker-compose.yml* --> configuration(essential)<br>
