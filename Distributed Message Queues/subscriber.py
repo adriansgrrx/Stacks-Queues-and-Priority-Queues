@@ -1,5 +1,6 @@
 import redis
 
+# Messages received by a subscriber are Python dictionaries with some metadata, which lets you decide how to deal with them.
 with redis.Redis() as client:
     pubsub = client.pubsub()
     pubsub.subscribe("chatroom")
